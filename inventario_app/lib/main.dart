@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:inventario_app/provider/nav_provider.dart';
 import 'package:inventario_app/provider/personas_provider.dart';
+import 'package:inventario_app/screens/home_page.dart';
 import 'package:provider/provider.dart';
 
 import 'models/persona_models.dart';
@@ -18,15 +20,17 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => PersonasProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => NavModel(),
+        ),
       ],
       child: MaterialApp(
-        title: 'Tabla de personas',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: TablaPersonas(),
-      ),
+          title: 'Tabla de personas',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          home: HomePage()),
     );
   }
 }
