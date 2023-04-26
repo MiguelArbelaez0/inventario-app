@@ -16,8 +16,8 @@ class PersonasProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void eliminarPersona(int indice) {
-    _personas.removeAt(indice);
+  void eliminarPersona(Persona persona) {
+    _personas.remove(persona);
     notifyListeners();
   }
 
