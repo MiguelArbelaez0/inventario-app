@@ -109,8 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 password: _passwordController.text,
                               );
                               if (isUserLoggedIn) {
-                                Navigator.pushReplacementNamed(
-                                    context, 'selection');
+                                Navigator.pushReplacementNamed(context, 'home');
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
