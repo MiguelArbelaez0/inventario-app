@@ -4,14 +4,14 @@ import 'package:provider/provider.dart';
 
 import '../provider/nav_provider.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _pages = [TablaPersonas()];
   @override
   Widget build(BuildContext context) {
