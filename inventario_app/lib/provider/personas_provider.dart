@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/persona_models.dart';
 
 class PersonasProvider extends ChangeNotifier {
-  List<Persona> _personas = [];
+  final List<Persona> _personas = [];
 
   List<Persona> get personas => _personas;
 
