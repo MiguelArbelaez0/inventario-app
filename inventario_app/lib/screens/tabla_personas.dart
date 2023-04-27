@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../models/persona_models.dart';
 import '../provider/personas_provider.dart';
+import '../widgets/dialog.dart';
 
 class TablaPersonas extends StatelessWidget {
   const TablaPersonas({Key? key});
@@ -11,61 +12,6 @@ class TablaPersonas extends StatelessWidget {
     final personasProvider =
         Provider.of<PersonasProvider>(context, listen: false);
     personasProvider.eliminarSeleccionados();
-  }
-
-  Future<void> agregarPersona(BuildContext context) async {
-    final personasProvider =
-        Provider.of<PersonasProvider>(context, listen: false);
-    final nombreController = TextEditingController();
-    final apellidoController = TextEditingController();
-    final edadController = TextEditingController();
-
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Agregar persona'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: nombreController,
-                decoration: InputDecoration(labelText: 'Nombre'),
-              ),
-              TextField(
-                controller: apellidoController,
-                decoration: InputDecoration(labelText: 'Apellido'),
-              ),
-              TextField(
-                controller: edadController,
-                decoration: InputDecoration(labelText: 'Edad'),
-                keyboardType: TextInputType.number,
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              child: Text('Cancelar'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text('Agregar'),
-              onPressed: () {
-                final nombre = nombreController.text;
-                final apellido = apellidoController.text;
-                final edad = int.tryParse(edadController.text) ?? 0;
-                final nuevaPersona =
-                    Persona(nombre: nombre, apellido: apellido, edad: edad);
-                personasProvider.agregarPersona(nuevaPersona);
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override
@@ -110,7 +56,12 @@ class TablaPersonas extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => agregarPersona(context),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => AgregarPersona(),
+          );
+        },
         child: Icon(Icons.add),
       ),
     );
