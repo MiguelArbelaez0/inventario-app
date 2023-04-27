@@ -46,13 +46,14 @@ class AgregarPersona extends StatelessWidget {
           ),
           TextButton(
             child: Text('Agregar'),
-            onPressed: () {
+            onPressed: () async {
               final nombre = nombreController.text;
               final apellido = apellidoController.text;
               final edad = int.tryParse(edadController.text) ?? 0;
               final nuevaPersona =
                   Persona(nombre: nombre, apellido: apellido, edad: edad);
               personasProvider.agregarPersona(nuevaPersona);
+              await personasProvider.savePersons();
               Navigator.of(context).pop();
             },
           ),

@@ -10,4 +10,22 @@ class Persona {
     required this.edad,
     this.seleccionado = false,
   });
+
+  static Persona fromJson(Map<String, dynamic> json) {
+    return Persona(
+      nombre: json['nombre'],
+      apellido: json['apellido'],
+      edad: json['edad'],
+      seleccionado: json['seleccionado'] ?? false,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'nombre': nombre,
+      'apellido': apellido,
+      'edad': edad,
+      'seleccionado': seleccionado,
+    };
+  }
 }
