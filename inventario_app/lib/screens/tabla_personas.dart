@@ -5,7 +5,7 @@ import '../models/persona_models.dart';
 import '../provider/personas_provider.dart';
 
 class TablaPersonas extends StatelessWidget {
-  const TablaPersonas({super.key});
+  const TablaPersonas({Key? key});
 
   void eliminarSeleccionados(BuildContext context) {
     final personasProvider =
@@ -70,25 +70,21 @@ class TablaPersonas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PersonasProvider>(
-      builder: (context, personasProvider, _) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('Tabla de Personas'),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () => agregarPersona(context),
-              ),
-              IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () => eliminarSeleccionados(context),
-              ),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Tabla de Personas'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () => eliminarSeleccionados(context),
           ),
-          body: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
+        ],
+      ),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Consumer<PersonasProvider>(
+          builder: (context, personasProvider, _) {
+            return DataTable(
               columns: [
                 DataColumn(label: Text('Seleccionar')),
                 DataColumn(label: Text('Nombre')),
@@ -109,10 +105,14 @@ class TablaPersonas extends StatelessWidget {
                   DataCell(Text(persona.edad.toString())),
                 ]);
               }).toList(),
-            ),
-          ),
-        );
-      },
+            );
+          },
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => agregarPersona(context),
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
