@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:inventario_app/data%20source/local_data_source.dart';
 
 import 'package:inventario_app/provider/nav_provider.dart';
-import 'package:inventario_app/provider/personas_provider.dart';
+import 'package:inventario_app/provider/product_provider..dart';
+import 'package:inventario_app/provider/user_provider.dart';
+import 'package:inventario_app/routes/app_routes.dart';
 import 'package:inventario_app/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -18,10 +20,13 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => PersonasProvider(localDataSource),
+          create: (context) => ProductProvider(localDataSource),
         ),
         ChangeNotifierProvider(
-          create: (context) => NavModel(),
+          create: (context) => NavModelProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserProvider(),
         ),
       ],
       child: MaterialApp(
@@ -29,7 +34,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: HomeScreen(),
+        onGenerateRoute: RoutesApp.generateRoute,
       ),
     );
   }

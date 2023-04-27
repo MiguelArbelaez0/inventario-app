@@ -1,27 +1,28 @@
 import 'dart:convert';
 
-import '../models/persona_models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LocalDataSource {
-  Future<List<Persona>> listPersons() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? personString = prefs.getString("persons");
+import '../models/product_model.dart';
 
-    if (personString == null || personString.isEmpty) {
+class LocalDataSource {
+  Future<List<Product>> listProducts() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? productString = prefs.getString("products");
+
+    if (productString == null || productString.isEmpty) {
       return [];
     }
 
-    final Iterable persons = json.decode(personString);
-    final result = List<Persona>.from(persons.map((e) => Persona.fromJson(e)));
+    final Iterable products = json.decode(productString);
+    final result = List<Product>.from(products.map((e) => Product.fromJson(e)));
     return result;
   }
 
-  Future<bool> savePersons(List<Persona> personas) async {
+  Future<bool> saveProducts(List<Product> products) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String personString = json.encode(personas);
+    String productString = json.encode(products);
     try {
-      await prefs.setString("persons", personString);
+      await prefs.setString("products", productString);
       return true;
     } catch (e) {
       return false;

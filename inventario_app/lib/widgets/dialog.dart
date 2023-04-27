@@ -1,38 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/persona_models.dart';
-import '../provider/personas_provider.dart';
+import '../models/product_model.dart';
+import '../provider/product_provider..dart';
 
-class AgregarPersona extends StatelessWidget {
-  const AgregarPersona({Key? key});
+class AddProduct extends StatelessWidget {
+  const AddProduct({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    final personasProvider =
-        Provider.of<PersonasProvider>(context, listen: false);
-    final nombreController = TextEditingController();
-    final apellidoController = TextEditingController();
-    final edadController = TextEditingController();
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
+    final nameController = TextEditingController();
+    final descriptionController = TextEditingController();
+    final priceController = TextEditingController();
 
     return Container(
       color: Colors.black.withOpacity(0.5),
       child: AlertDialog(
-        title: Text('Agregar persona'),
+        title: Text('Agregar Producto'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
-              controller: nombreController,
+              controller: nameController,
               decoration: InputDecoration(labelText: 'Nombre'),
             ),
             TextField(
-              controller: apellidoController,
-              decoration: InputDecoration(labelText: 'Apellido'),
+              controller: descriptionController,
+              decoration: InputDecoration(labelText: 'Descripción'),
             ),
             TextField(
-              controller: edadController,
-              decoration: InputDecoration(labelText: 'Edad'),
+              controller: priceController,
+              decoration: InputDecoration(labelText: 'Precio'),
               keyboardType: TextInputType.number,
             ),
           ],
@@ -47,13 +47,13 @@ class AgregarPersona extends StatelessWidget {
           TextButton(
             child: Text('Agregar'),
             onPressed: () async {
-              final nombre = nombreController.text;
-              final apellido = apellidoController.text;
-              final edad = int.tryParse(edadController.text) ?? 0;
-              final nuevaPersona =
-                  Persona(nombre: nombre, apellido: apellido, edad: edad);
-              personasProvider.agregarPersona(nuevaPersona);
-              await personasProvider.savePersons();
+              final name = nameController.text;
+              final description = descriptionController.text;
+              final price = double.tryParse(priceController.text) ?? 0;
+              final newProduct = Product(
+                  nombre: name, descripcion: description, precio: price);
+              productProvider.addProduct(newProduct);
+              await productProvider.saveProducts();
               Navigator.of(context).pop();
             },
           ),

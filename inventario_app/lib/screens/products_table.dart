@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/persona_models.dart';
-import '../provider/personas_provider.dart';
+import '../provider/product_provider..dart';
 import '../widgets/dialog.dart';
 
-class TablaPersonas extends StatelessWidget {
-  const TablaPersonas({Key? key});
+class TablaProductos extends StatelessWidget {
+  const TablaProductos({Key? key});
 
   void eliminarSeleccionados(BuildContext context) {
-    final personasProvider =
-        Provider.of<PersonasProvider>(context, listen: false);
-    personasProvider.eliminarSeleccionados();
+    final productosProvider =
+        Provider.of<ProductProvider>(context, listen: false);
+    productosProvider.saveProducts();
+    productosProvider.removeSelectedProducts();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tabla de Personas'),
+        title: Text('Tabla de Productos'),
         actions: [
           IconButton(
             icon: Icon(Icons.delete),
@@ -28,27 +28,27 @@ class TablaPersonas extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: Consumer<PersonasProvider>(
-          builder: (context, personasProvider, _) {
+        child: Consumer<ProductProvider>(
+          builder: (context, productosProvider, _) {
             return DataTable(
               columns: [
                 DataColumn(label: Text('Seleccionar')),
                 DataColumn(label: Text('Nombre')),
-                DataColumn(label: Text('Apellido')),
-                DataColumn(label: Text('Edad')),
+                DataColumn(label: Text('Descripción')),
+                DataColumn(label: Text('Precio')),
               ],
-              rows: personasProvider.personas.map((persona) {
+              rows: productosProvider.products.map((producto) {
                 return DataRow(cells: [
                   DataCell(Checkbox(
-                    value: persona.seleccionado,
+                    value: producto.seleccionado,
                     onChanged: (valor) {
-                      persona.seleccionado = valor != null ? valor : true;
-                      personasProvider.notifyListeners();
+                      producto.seleccionado = valor != null ? valor : true;
+                      productosProvider.notifyListeners();
                     },
                   )),
-                  DataCell(Text(persona.nombre)),
-                  DataCell(Text(persona.apellido)),
-                  DataCell(Text(persona.edad.toString())),
+                  DataCell(Text(producto.nombre)),
+                  DataCell(Text(producto.descripcion)),
+                  DataCell(Text(producto.precio.toString())),
                 ]);
               }).toList(),
             );
@@ -59,7 +59,7 @@ class TablaPersonas extends StatelessWidget {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (context) => AgregarPersona(),
+            builder: (context) => AddProduct(),
           );
         },
         child: Icon(Icons.add),

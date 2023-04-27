@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class NavModel extends ChangeNotifier {
+class NavModelProvider extends ChangeNotifier {
   int _selectedTab = 0;
 
   int get selectedTab => _selectedTab;
