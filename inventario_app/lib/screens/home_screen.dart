@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventario_app/screens/settings_screen.dart';
 import 'package:inventario_app/screens/tabla_personas.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<Widget> _pages = [TablaPersonas()];
+  final List<Widget> _pages = [TablaPersonas(), SettingScreen()];
   @override
   Widget build(BuildContext context) {
     final tabModel = Provider.of<NavModel>(context);
