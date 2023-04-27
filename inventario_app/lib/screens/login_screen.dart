@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventario_app/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/user_provider.dart';
@@ -109,7 +110,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 password: _passwordController.text,
                               );
                               if (isUserLoggedIn) {
-                                Navigator.pushReplacementNamed(context, 'home');
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomeScreen()),
+                                );
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
