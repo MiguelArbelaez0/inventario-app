@@ -30,10 +30,6 @@ class _HomePageState extends State<HomePage> {
             label: 'inventario',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.date_range_rounded),
-            label: ' ',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Settings',
           ),
