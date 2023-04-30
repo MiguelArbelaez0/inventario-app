@@ -5,7 +5,7 @@ import '../provider/product_provider..dart';
 import '../widgets/dialog.dart';
 
 class TablaProductos extends StatelessWidget {
-  const TablaProductos({Key? key});
+  const TablaProductos({Key? key}) : super(key: key);
 
   void eliminarSeleccionados(BuildContext context) {
     final productosProvider =
