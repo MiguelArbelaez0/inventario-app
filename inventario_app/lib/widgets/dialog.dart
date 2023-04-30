@@ -15,6 +15,12 @@ class AddProduct extends StatelessWidget {
     final descriptionController = TextEditingController();
     final priceController = TextEditingController();
 
+    // Aquí definimos la lista de opciones para la categoría
+    final List<String> categoryOptions = ['Comida', 'Bebida', 'Postre'];
+
+    // Esta es la variable que almacenará la selección del usuario
+    String? selectedCategory;
+
     return Container(
       color: Colors.black.withOpacity(0.5),
       child: AlertDialog(
@@ -35,6 +41,20 @@ class AddProduct extends StatelessWidget {
               decoration: InputDecoration(labelText: 'Precio'),
               keyboardType: TextInputType.number,
             ),
+            // Aquí agregamos el DropdownButtonFormField
+            DropdownButtonFormField<String>(
+              value: selectedCategory,
+              decoration: InputDecoration(labelText: 'Categoría'),
+              items: categoryOptions
+                  .map((category) => DropdownMenuItem(
+                        child: Text(category),
+                        value: category,
+                      ))
+                  .toList(),
+              onChanged: (value) {
+                selectedCategory = value;
+              },
+            ),
           ],
         ),
         actions: [
@@ -50,8 +70,15 @@ class AddProduct extends StatelessWidget {
               final name = nameController.text;
               final description = descriptionController.text;
               final price = double.tryParse(priceController.text) ?? 0;
+
+              // Aquí creamos el nuevo producto con la categoría seleccionada
               final newProduct = Product(
-                  nombre: name, descripcion: description, precio: price);
+                nombre: name,
+                descripcion: description,
+                precio: price,
+                categoria: selectedCategory!, // Nueva propiedad
+              );
+
               productProvider.addProduct(newProduct);
               await productProvider.saveProducts();
               Navigator.of(context).pop();
