@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           create: (context) => NavModelProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => UserProvider(),
+          create: (context) => AuthProvider(),
         ),
       ],
       child: MaterialApp(
