@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/user_provider.dart';
+import '../provider/auth_provider.dart';
 
 class SettingScreen extends StatelessWidget {
-  const SettingScreen({super.key});
+  const SettingScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<AuthProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -20,13 +20,14 @@ class SettingScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Welcome, ${userProvider.user.name} ${userProvider.user.lastName}',
+              'Welcome, ${userProvider.user?.firstName ?? ''} ${userProvider.user?.lastName ?? ''}',
               style: TextStyle(fontSize: 24),
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, 'login');
+              onPressed: () async {
+                await userProvider.logout();
+                Navigator.pushReplacementNamed(context, '/');
               },
               child: Text('Log Out'),
             ),
