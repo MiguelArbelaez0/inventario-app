@@ -5,7 +5,7 @@ import '../provider/product_provider..dart';
 import '../widgets/dialog.dart';
 
 class TablaProductos extends StatelessWidget {
-  const TablaProductos({Key? key});
+  const TablaProductos({Key? key}) : super(key: key);
 
   void eliminarSeleccionados(BuildContext context) {
     final productosProvider =
@@ -35,7 +35,7 @@ class TablaProductos extends StatelessWidget {
               columns: [
                 DataColumn(label: Text('Seleccionar')),
                 DataColumn(label: Text('Nombre')),
-                DataColumn(label: Text('Descripción')),
+                DataColumn(label: Text('Categoría')), // Nuevo
                 DataColumn(label: Text('Precio')),
               ],
               rows: productosProvider.products.map((producto) {
@@ -48,7 +48,7 @@ class TablaProductos extends StatelessWidget {
                     },
                   )),
                   DataCell(Text(producto.nombre)),
-                  DataCell(Text(producto.descripcion)),
+                  DataCell(Text(producto.categoria)),
                   DataCell(Text(producto.precio.toString())),
                 ]);
               }).toList(),
