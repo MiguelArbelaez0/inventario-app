@@ -7,6 +7,7 @@ class ProductProvider extends ChangeNotifier {
   LocalDataSource localDataSource;
 
   List<Product> _products = [];
+  String _searchTerm = '';
 
   ProductProvider(this.localDataSource) {
     _init();
@@ -17,7 +18,23 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Product> get products => _products;
+  List<Product> get products {
+    if (_searchTerm.isEmpty) {
+      return _products;
+    } else {
+      return _products
+          .where((product) =>
+              product.nombre.toLowerCase().contains(_searchTerm.toLowerCase()))
+          .toList();
+    }
+  }
+
+  String get searchTerm => _searchTerm;
+
+  void setSearchTerm(String term) {
+    _searchTerm = term;
+    notifyListeners();
+  }
 
   Future<void> addProduct(Product product) async {
     _products.add(product);
