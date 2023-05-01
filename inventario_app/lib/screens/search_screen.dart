@@ -19,6 +19,7 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text('Buscar producto'),
       ),
       body: Column(
