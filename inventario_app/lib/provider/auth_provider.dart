@@ -7,10 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthProvider with ChangeNotifier {
   User? _user;
 
-  AuthProvider() {
-    _init();
-  }
-
   User? get user => _user;
 
   Future<bool> login(String email, String password) async {
@@ -24,6 +20,10 @@ class AuthProvider with ChangeNotifier {
       if (user.password == password) {
         _user = user;
         notifyListeners();
+        await prefs.setString(
+            'currentUser',
+            json.encode(user
+                .toJson())); // Guardar el usuario actual en las preferencias
         return true;
       }
     }
@@ -48,6 +48,10 @@ class AuthProvider with ChangeNotifier {
         password: password);
 
     await prefs.setString(email, json.encode(user.toJson()));
+    await prefs.setString(
+        'currentUser',
+        json.encode(
+            user.toJson())); // Guardar el usuario actual en las preferencias
 
     _user = user;
     notifyListeners();
@@ -56,6 +60,9 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> logout() async {
     _user = null;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(
+        'currentUser'); // Eliminar el usuario actual de las preferencias
     notifyListeners();
   }
 
@@ -65,6 +72,7 @@ class AuthProvider with ChangeNotifier {
 
     if (userData != null) {
       _user = User.fromJson(json.decode(userData));
+      notifyListeners();
     }
   }
 }

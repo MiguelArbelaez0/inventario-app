@@ -27,7 +27,7 @@ class SettingScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 await userProvider.logout();
-                Navigator.pushReplacementNamed(context, '/');
+                Navigator.pushReplacementNamed(context, 'login');
               },
               child: Text('Log Out'),
             ),

@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   final success = await userProvider.login(email, password);
 
                   if (success) {
-                    Navigator.pushReplacementNamed(context, 'settings');
+                    Navigator.pushReplacementNamed(context, 'home');
                   } else {
                     setState(() {
                       _errorMessage = 'Invalid email or password';

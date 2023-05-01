@@ -7,8 +7,6 @@ import '../screens/login_screen.dart';
 class RoutesApp {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case "/":
-        return MaterialPageRoute(builder: (_) => LoginScreen());
       case "home":
         return MaterialPageRoute(builder: (_) => HomeScreen());
 
