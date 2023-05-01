@@ -36,8 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'inventario',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.table_view_rounded),
-            label: 'inventario',
+            icon: Icon(Icons.search),
+            label: 'search',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
