@@ -8,28 +8,31 @@ import 'package:inventario_app/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final LocalDataSource localDataSource = LocalDataSource();
+
+  final UserLocalDataSource userlocalDataSource = UserLocalDataSource();
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => ProductProvider(localDataSource),
+        ChangeNotifierProvider<ProductProvider>(
+          create: (_) => ProductProvider(localDataSource),
         ),
-        ChangeNotifierProvider(
-          create: (context) => NavModelProvider(),
+        ChangeNotifierProvider<NavModelProvider>(
+          create: (_) => NavModelProvider(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => AuthProvider(),
+        ChangeNotifierProvider<AuthProvider>(
+          create: (_) => AuthProvider(userlocalDataSource),
         ),
       ],
       child: MaterialApp(
-        title: 'Tabla de personas',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

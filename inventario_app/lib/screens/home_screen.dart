@@ -15,9 +15,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _pages = [
-    TablaProductos(),
-    SearchProductScreen(),
-    SettingScreen()
+    const TablaProductos(),
+    const SearchProductScreen(),
+    const SettingScreen()
   ];
   @override
   Widget build(BuildContext context) {

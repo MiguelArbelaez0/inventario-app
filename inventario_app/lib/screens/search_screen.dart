@@ -20,6 +20,7 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        centerTitle: true,
         title: Text('Buscar producto'),
       ),
       body: Column(
@@ -36,12 +37,12 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
                   icon: Icon(Icons.clear),
                   onPressed: () {
                     _searchController.clear();
-                    productProvider.setSearchTerm('');
+                    productProvider.setSearchProduct('');
                   },
                 ),
               ),
               onChanged: (value) {
-                productProvider.setSearchTerm(value);
+                productProvider.setSearchProduct(value);
               },
             ),
           ),
@@ -50,13 +51,9 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
               itemCount: productProvider.products.length,
               itemBuilder: (context, index) {
                 final product = productProvider.products[index];
-
                 return ListTile(
                   title: Text(product.nombre),
                   subtitle: Text(product.precio.toString()),
-                  onTap: () {
-                    // Navegar a la pantalla de detalles del producto
-                  },
                 );
               },
             ),

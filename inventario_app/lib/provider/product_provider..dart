@@ -7,7 +7,7 @@ class ProductProvider extends ChangeNotifier {
   LocalDataSource localDataSource;
 
   List<Product> _products = [];
-  String _searchTerm = '';
+  String _searchProduct = '';
 
   ProductProvider(this.localDataSource) {
     _init();
@@ -19,20 +19,23 @@ class ProductProvider extends ChangeNotifier {
   }
 
   List<Product> get products {
-    if (_searchTerm.isEmpty) {
+    if (_searchProduct.isEmpty) {
       return _products;
     } else {
       return _products
-          .where((product) =>
-              product.nombre.toLowerCase().contains(_searchTerm.toLowerCase()))
+          .where((product) => product.nombre
+              .toLowerCase()
+              .startsWith(_searchProduct.toLowerCase()))
           .toList();
     }
   }
 
-  String get searchTerm => _searchTerm;
+  int get numberOfProductsAdded => _products.length;
 
-  void setSearchTerm(String term) {
-    _searchTerm = term;
+  String get searchProduct => _searchProduct;
+
+  void setSearchProduct(String term) {
+    _searchProduct = term;
     notifyListeners();
   }
 
