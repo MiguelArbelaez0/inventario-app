@@ -4,28 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:inventario_app/models/user_data_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data source/local_data_source.dart';
+
 class AuthProvider with ChangeNotifier {
   User? _user;
+  UserLocalDataSource userlocalDataSource;
 
-  AuthProvider() {
+  AuthProvider(this.userlocalDataSource) {
     _init();
   }
 
   User? get user => _user;
 
   Future<bool> login(String email, String password) async {
-    final prefs = await SharedPreferences.getInstance();
+    final user = await userlocalDataSource.getUser(email);
 
-    final userData = prefs.getString(email);
-
-    if (userData != null) {
-      final user = User.fromJson(json.decode(userData));
-
-      if (user.password == password) {
-        _user = user;
-        notifyListeners();
-        return true;
-      }
+    if (user != null && user.password == password) {
+      _user = user;
+      notifyListeners();
+      await userlocalDataSource.setCurrentUser(user);
+      return true;
     }
 
     return false;
@@ -33,11 +31,9 @@ class AuthProvider with ChangeNotifier {
 
   Future<bool> register(
       String firstName, String lastName, String email, String password) async {
-    final prefs = await SharedPreferences.getInstance();
+    final existingUser = await userlocalDataSource.getUser(email);
 
-    final userData = prefs.getString(email);
-
-    if (userData != null) {
+    if (existingUser != null) {
       return false; // el usuario ya existe
     }
 
@@ -47,7 +43,7 @@ class AuthProvider with ChangeNotifier {
         email: email,
         password: password);
 
-    await prefs.setString(email, json.encode(user.toJson()));
+    await userlocalDataSource.saveUser(user);
 
     _user = user;
     notifyListeners();
@@ -56,15 +52,16 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> logout() async {
     _user = null;
+    await userlocalDataSource.removeCurrentUser();
     notifyListeners();
   }
 
   void _init() async {
-    final prefs = await SharedPreferences.getInstance();
-    final userData = prefs.getString('currentUser');
+    final user = await userlocalDataSource.getCurrentUser();
 
-    if (userData != null) {
-      _user = User.fromJson(json.decode(userData));
+    if (user != null) {
+      _user = user;
+      notifyListeners();
     }
   }
 }

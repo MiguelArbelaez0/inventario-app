@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventario_app/screens/search_screen.dart';
 import 'package:inventario_app/screens/settings_screen.dart';
 import 'package:inventario_app/screens/products_table.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<Widget> _pages = [TablaProductos(), SettingScreen()];
+  final List<Widget> _pages = [
+    const TablaProductos(),
+    const SearchProductScreen(),
+    const SettingScreen()
+  ];
   @override
   Widget build(BuildContext context) {
     final tabModel = Provider.of<NavModelProvider>(context);
@@ -29,6 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.table_view_rounded),
             label: 'inventario',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'search',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
